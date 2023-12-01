@@ -25,7 +25,7 @@ public class Solution {
                     }
                 }
             }
-            c += Integer.parseInt("" + f + l);
+            c += 10 * f + l;
         }
         return c;
     }
@@ -66,7 +66,7 @@ public class Solution {
                     }
                 }
             }
-            c += Integer.parseInt("" + f + l);
+            c += 10*f + l;
         }
         return c;
     }
