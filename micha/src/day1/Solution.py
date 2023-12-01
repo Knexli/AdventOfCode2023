@@ -9,9 +9,10 @@ def traverseCalibrationPartOne(calibration):
         if i.isnumeric():
             firstDigit = i
             break
-    for i in calibration:
+    for i in reversed(calibration):
         if i.isnumeric():
             lastDigit = i
+            break
     return int(firstDigit + lastDigit)
 
 
