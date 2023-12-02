@@ -8,8 +8,8 @@ import (
 	"strconv"
 )
 
-func readInputFile(s string) []string {
-	file, err := os.Open("day1/input.txt")
+func readInputFile() []string {
+	file, err := os.Open("./input.txt")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -25,7 +25,7 @@ func readInputFile(s string) []string {
 }
 
 func main() {
-	linesToParse := readInputFile("input.txt")
+	linesToParse := readInputFile()
 	linesToParse = corrected(linesToParse)
 
 	println(linesToParse)
