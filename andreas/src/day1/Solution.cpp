@@ -2,8 +2,6 @@
 // Created by Andreas on 02.12.2023.
 //
 
-#include "Solution.h"
-
 #include <iostream>
 #include <string>
 #include <map>
