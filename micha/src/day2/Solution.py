@@ -1,5 +1,3 @@
-import re
-
 import numpy as np
 
 file = open('input.txt')
@@ -19,8 +17,7 @@ for game in games:
     breach = False
     draws = game.split(': ')[1].split('; ')
     for draw in draws:
-        cube = draw.split(', ')
-        for colourTuple in cube:
+        for colourTuple in draw.split(', '):
             amt = colourTuple.split(' ')[0]
             colour = colourTuple.split(' ')[1]
             if int(colourMap.get(colour.strip())) < int(amt):
@@ -33,21 +30,18 @@ print(sumId)
 # part two
 powerSum = 0
 for game in games:
-    definition = game.split(': ')[0]
     draws = game.split(': ')[1].split('; ')
     A = None
     for draw in draws:
         v = np.zeros(3)
-        cube = draw.split(', ')
-        for colourTuple in cube:
-            amt = colourTuple.split(' ')[0]
+        for colourTuple in draw.split(', '):
             colour = colourTuple.split(' ')[1].strip()
             if colour == 'red':
-                v[0] = amt
+                v[0] = colourTuple.split(' ')[0]
             elif colour == 'blue':
-                v[1] = amt
+                v[1] = colourTuple.split(' ')[0]
             elif colour == 'green':
-                v[2] = amt
+                v[2] = colourTuple.split(' ')[0]
         if A is None:
             A = np.array(v)
         else:
@@ -57,5 +51,3 @@ for game in games:
         power *= max(column)
     powerSum += power
 print(powerSum)
-
-
