@@ -18,9 +18,39 @@ func main() {
 	sum := 0
 	for _, n := range adjacent {
 		sum += n.value
-		println(n.value)
 	}
 	println(sum)
+
+	sum = 0
+	gearGroups := findGearGroups()
+	for _, group := range gearGroups {
+		sum += group.getRatio()
+	}
+	println(sum)
+}
+
+func findGearGroups() []gearGroup {
+	gearGroups := make([]gearGroup, 0)
+	for _, p := range parts {
+		if p.variant == "*" {
+			gg := gearGroup{adjacent: make([]int, 0)}
+			for _, n := range numbers {
+				if n.isAdjacent(p.x, p.y) {
+					gg.addAdjacent(n)
+				}
+			}
+			gearGroups = append(gearGroups, gg)
+		}
+	}
+
+	filteredGearGroups := make([]gearGroup, 0)
+	for _, group := range gearGroups {
+		if len(group.adjacent) > 1 {
+			filteredGearGroups = append(filteredGearGroups, group)
+		}
+	}
+
+	return filteredGearGroups
 }
 
 func getAdjacentNumbers() []number {
@@ -55,6 +85,7 @@ func readNumbers(lines []string) {
 				if c != '.' {
 					p := part{}
 					p.setCoordinate(x, y)
+					p.setValue(string(c))
 					parts = append(parts, p)
 				}
 			}
@@ -64,13 +95,26 @@ func readNumbers(lines []string) {
 	}
 }
 
-type field interface {
-	setValue(string)
-	setCoordinate(int, int)
+type gearGroup struct {
+	adjacent []int
 }
+
+func (g *gearGroup) addAdjacent(n number) {
+	g.adjacent = append(g.adjacent, n.value)
+}
+
+func (g *gearGroup) getRatio() int {
+	multi := g.adjacent[0]
+	for i := 1; i < len(g.adjacent); i++ {
+		multi *= g.adjacent[i]
+	}
+	return multi
+}
+
 type part struct {
-	x int
-	y int
+	variant string
+	x       int
+	y       int
 }
 
 func (p *part) setCoordinate(x int, y int) {
@@ -78,8 +122,8 @@ func (p *part) setCoordinate(x int, y int) {
 	p.x = x
 }
 
-func (p *part) setValue(string) {
-
+func (p *part) setValue(s string) {
+	p.variant = s
 }
 
 type number struct {
