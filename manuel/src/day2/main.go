@@ -2,7 +2,6 @@ package main
 
 import (
 	"common"
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -29,6 +28,33 @@ func main() {
 
 	sum := getSumOfPossibleGameIds(maxGame, games)
 	println(sum)
+	println("++++++++++++++++ Part Two ++++++++++++++++++++")
+
+	sum = getSumOfPowersOfMinGames(games)
+	println(sum)
+}
+
+func getSumOfPowersOfMinGames(games []game) int {
+	sum := 0
+	for _, g := range games {
+		min := struct {
+			red   int
+			blue  int
+			green int
+		}{
+			red:   0,
+			blue:  0,
+			green: 0,
+		}
+		for i := 0; i < len(g.green); i++ {
+			min.red = max(min.red, g.red[i])
+			min.blue = max(min.blue, g.blue[i])
+			min.green = max(min.green, g.green[i])
+		}
+		sum += min.green * min.red * min.blue
+	}
+
+	return sum
 }
 
 func getSumOfPossibleGameIds(maxGame game, games []game) int {
@@ -36,9 +62,8 @@ func getSumOfPossibleGameIds(maxGame game, games []game) int {
 	for _, g := range games {
 		possible := true
 		for i := 0; i < len(g.red); i++ {
-
 			if g.red[i] > maxGame.red[0] || g.blue[i] > maxGame.blue[0] || g.green[i] > maxGame.green[0] {
-				fmt.Printf("Game: %d r: %d b: %d g: %d\n", g.id, g.red[i], g.blue[i], g.green[i])
+				//fmt.Printf("Game: %d r: %d b: %d g: %d\n", g.id, g.red[i], g.blue[i], g.green[i])
 				possible = false
 			}
 		}
