@@ -196,8 +196,10 @@ void solve2() {
 
     for (int i = 0; i < 1000; i++) {
         free(map[i]);
+        free(intmap[i]);
     }
     free(map);
+    free(intmap);
     std::cout << res;
 }
 
