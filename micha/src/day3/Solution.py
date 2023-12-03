@@ -39,7 +39,7 @@ for i in range(A[0].size):
                     break
         else:
             n = None
-        if j < A[0].size - 1 and not np.char.isnumeric(A[i][j + 1]) and adj:
+        if (j < A[0].size - 1 and not np.char.isnumeric(A[i][j + 1]) and adj) or (j == A[0].size - 1 and adj):
             Sum += int(n)
             # part two
             if gearPos is not None:
