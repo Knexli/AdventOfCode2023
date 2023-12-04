@@ -2,6 +2,7 @@ package main
 
 import (
 	"common"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -12,6 +13,11 @@ type scratch struct {
 	points         int
 	amount         int
 	id             int
+	mentioned      int
+}
+
+func (s *scratch) print() {
+	fmt.Printf("%d: mentioned: %d, amount: %d \n", s.id, s.mentioned, s.amount)
 }
 
 func newScratch(id int, line string) *scratch {
@@ -80,16 +86,25 @@ func check(err error) {
 func main() {
 	lines := common.ReadInputFile()
 	sum := 0
-	scratches := make([]scratch, 0)
+	scratches := make([]*scratch, 0)
 	for i, line := range lines {
 		parts := strings.Split(line, ":")
 		s := newScratch(i+1, parts[1])
-		scratches = append(scratches, *s)
+		scratches = append(scratches, s)
 		sum += s.points
 	}
 	println(sum)
 
-	//for i, s := range scratches {
-	//
-	//	}
+	sum = 0
+	for i, s := range scratches {
+		s.mentioned++
+		sum += s.mentioned
+		s.print()
+		for offset := 1; offset <= s.amount; offset++ {
+			if i+offset < len(scratches) {
+				scratches[i+offset].mentioned += s.mentioned
+			}
+		}
+	}
+	println(sum)
 }
