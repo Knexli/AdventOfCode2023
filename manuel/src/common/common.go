@@ -6,6 +6,12 @@ import (
 	"os"
 )
 
+func Check(err error)  {
+	if err != nil {
+		panic(err)
+	}	
+}
+
 func ReadInputFile() []string {
 	file, err := os.Open("./input.txt")
 	if err != nil {
